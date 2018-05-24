@@ -2,10 +2,10 @@ import { CancelToken } from 'axios';
 import { CANCEL } from 'redux-saga';
 import request from '../utils/request';
 
-export function getPost() {
+export function requestStuff() {
   const source = CancelToken.source();
   const r = request({
-    url: 'https://jsonplaceholder.typicode.com/posts',
+    url: 'https://jsonplaceholder.typicode.com/photos',
     method: 'get',
     cancelToken: source.token,
   });
@@ -13,14 +13,14 @@ export function getPost() {
   return r;
 }
 
-export function downloadFile() {
-  // const source = CancelToken.source();
+export function longRequest() {
+  const source = CancelToken.source();
   const r = request({
-    url: 'http://file-examples.com/wp-content/uploads/2017/04/file_example_MP4_640_3MG.mp4',
+    url: 'http://slowwly.robertomurray.co.uk/delay/3000/url/http://www.google.co.uk',
     method: 'get',
     responseType: 'blob',
-    // cancelToken: source.token,
+    cancelToken: source.token,
   });
-  // r[CANCEL] = () => source.cancel();
+  r[CANCEL] = () => source.cancel();
   return r;
 }
